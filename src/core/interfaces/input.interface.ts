@@ -1,10 +1,9 @@
-/* eslint-disable @typescript-eslint/ban-types */
-import { Schema } from 'mongoose';
+import { QueryOptions, Schema } from 'mongoose';
 
 export interface PaginationInput {
   readonly conditions?: object;
   readonly projection?: object | string;
-  readonly options?: object;
+  readonly options?: QueryOptions;
   readonly populate?: string | object;
   readonly sort?: string | object;
   readonly limit?: number;
@@ -14,14 +13,14 @@ export interface PaginationInput {
 export interface FindOneInput {
   readonly conditions?: object;
   readonly projection?: object | string;
-  readonly options?: object;
+  readonly options?: QueryOptions;
   readonly populate?: string | object;
 }
 
 export interface FindAllInput {
   readonly conditions?: object;
   readonly projection?: object | string;
-  readonly options?: object;
+  readonly options?: QueryOptions;
   readonly populate?: string | object;
   readonly sort?: string | object;
 }
@@ -29,7 +28,7 @@ export interface FindAllInput {
 export interface FindByIdInput {
   readonly id: string | Schema.Types.ObjectId;
   readonly projection?: object | string;
-  readonly options?: object;
+  readonly options?: QueryOptions;
   readonly populate?: string | object;
 }
 
@@ -46,17 +45,17 @@ export interface FindByIdAndUpdateInput {
 export interface FindOneAndUpdateInput {
   readonly conditions?: object;
   readonly update: object;
-  readonly options?: object;
+  readonly options?: QueryOptions;
 }
 
 export interface UpdateManyInput {
   readonly filter?: object;
   readonly update: object;
-  readonly options?: object;
+  readonly options?: QueryOptions;
 }
 
 export interface UpdateInput {
   readonly conditions?: object;
   readonly update: object;
-  readonly options?: object;
+  readonly options?: QueryOptions;
 }

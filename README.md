@@ -71,3 +71,14 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+
+# Variable environment
+
+- Create .env file to fill variables below for dev environment:
+
+ROOT_USER_EMAIL=
+ROOT_USER_DEFAULT_PASSWORD=
+
+REDIS_URL=//localhost:6379
+MONGO_URI=mongodb://localhost:27017/dev-sneaker

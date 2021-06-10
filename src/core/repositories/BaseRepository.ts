@@ -10,7 +10,6 @@ import {
   Pagination,
   PaginationInput,
   ReadResourceInterface,
-  UpdateInput,
   UpdateManyInput,
   WriteResourceInterface,
 } from '../interfaces';
@@ -123,34 +122,16 @@ export class BaseRepository<T extends Document>
   }
 
   // write
-  create(item: Partial<T>[], options?: object): Promise<T[]> {
-    return new Promise((resolve, reject) => {
-      this.model
-        .create(item, options)
-        .then((data) => {
-          console.log('data: ' + data);
-          resolve(data as T[]);
-        })
-        .catch((e) => reject(e));
-    });
+  createOne(item: Partial<T>): Promise<T> {
+    return this.model.create(item);
+  }
+
+  create(items: Partial<T>[]): Promise<T[]> {
+    return this.model.create(items);
   }
 
   insertMany(items?: T[], options?: object): Promise<T[]> {
-    return new Promise((resolve, reject) => {
-      this.model
-        .insertMany(items, options)
-        .then((data) => resolve(data))
-        .catch((e) => reject(e));
-    });
-  }
-
-  update({ conditions, update, options }: UpdateInput): Promise<any> {
-    return new Promise((resolve, reject) => {
-      this.model
-        .update(conditions, update, options)
-        .then((data) => resolve(data))
-        .catch((e) => reject(e));
-    });
+    return this.model.insertMany(items, options);
   }
 
   updateMany({ filter, update, options }: UpdateManyInput): Promise<any> {

@@ -2,7 +2,7 @@ import { Injectable, OnModuleInit } from '@nestjs/common';
 import * as redis from 'redis';
 import * as Redlock from 'redlock';
 import { promisify } from 'util';
-import { RedisMutexLock } from '../impls/redis-mutex-lock';
+import { RedisMutexLock } from '../mutex-locks/redis-mutex-lock';
 import { IMutexLock } from '../interfaces/mutex-lock.interface';
 import { ConfigService } from './config.service';
 

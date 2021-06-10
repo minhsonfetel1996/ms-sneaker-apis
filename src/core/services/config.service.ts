@@ -40,8 +40,12 @@ export class ConfigService {
 
   getRootAccount() {
     return {
-      rootUserEmail: this.config.ROOT_USER_EMAIL,
-      rootUserPassword: this.config.ROOT_USER_DEFAULT_PASSWORD,
+      email: this.config.ROOT_USER_EMAIL,
+      password: this.config.ROOT_USER_DEFAULT_PASSWORD,
+      firstName: 'Administrator',
+      lastName: 'Sneaker',
+      address: 'Sneaker shop',
+      phone: '123456789',
     };
   }
 }

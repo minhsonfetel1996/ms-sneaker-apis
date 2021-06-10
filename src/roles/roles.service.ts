@@ -19,18 +19,18 @@ export class RolesService {
     if (roleFromDB) {
       throw new BadRequestException(roleFromDB);
     }
-    return this.rolesRepository.create([data])[0];
+    return this.rolesRepository.createOne(data);
   }
 
-  async findAll(): Promise<Roles[]> {
+  findAll(): Promise<Roles[]> {
     return this.rolesRepository.findAll({
       conditions: { type: { $ne: 'ADMIN' } },
     });
   }
 
-  async findByType(type: string): Promise<Roles> {
+  findByType(type: string): Promise<Roles> {
     return this.rolesRepository.findOne({
-      conditions: { type },
+      conditions: { type: type },
     });
   }
 }

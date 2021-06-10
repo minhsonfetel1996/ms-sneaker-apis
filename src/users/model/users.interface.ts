@@ -9,4 +9,5 @@ export interface Users extends Document {
   address?: string;
   avatar?: string;
   phone?: string;
+  roleId?: string | Schema.Types.ObjectId;
 }

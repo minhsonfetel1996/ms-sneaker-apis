@@ -14,25 +14,27 @@ export class UsersService {
 
   getRootUser(): Promise<Users> {
     return this.usersRepository.findOne({
-      conditions: { email: this.configService.get('ROOT_USER_EMAIL') },
+      conditions: { email: this.configService.getRootAccount().email },
     });
   }
 
-  async initRootUser() {
-    const rootPassword = await this.bcryptService.hash(
-      this.configService.get('ROOT_USER_DEFAULT_PASSWORD'),
-    );
-    const root = await this.usersRepository.create([
-      {
-        email: this.configService.get('ROOT_USER_EMAIL'),
-        password: rootPassword,
-        firstName: 'Admin',
-        lastName: 'Sneaker',
-        address: 'Sneaker shop',
-        phone: '123456789',
-      },
-    ])[0];
-    return root;
+  initRootUser(): Promise<Users> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const rootPassword = await this.bcryptService.hash(
+          this.configService.getRootAccount().password,
+        );
+        const newRootUser: Partial<Users> = {
+          ...this.configService.getRootAccount(),
+          password: rootPassword,
+        };
+
+        const root = await this.usersRepository.createOne(newRootUser);
+        resolve(root);
+      } catch (error) {
+        reject(error);
+      }
+    });
   }
 
   async updateUser(user: Users) {
