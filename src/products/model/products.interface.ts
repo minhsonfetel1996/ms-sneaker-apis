@@ -10,7 +10,7 @@ export interface ProductSize {
   onStock?: boolean;
 }
 
-export interface Products extends Document {
+export interface ProductsDocument extends Document {
   id?: string | Schema.Types.ObjectId;
   main_product_id?: string;
   title?: string;

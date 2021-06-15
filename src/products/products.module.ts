@@ -5,6 +5,13 @@ import { ProductsController } from './products.controller';
 import { ProductsRepository } from './products.repository';
 import { ProductsService } from './products.service';
 
+/**
+ *
+ * @export
+ * @class Products
+ *
+ * @author smpham
+ */
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: 'Products', schema: ProductsSchema }]),

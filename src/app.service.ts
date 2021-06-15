@@ -2,11 +2,19 @@ import { Injectable, OnModuleInit } from '@nestjs/common';
 import { ConfigService } from './core/services/config.service';
 import { RedisService } from './core/services/redis.service';
 import { SneakerLogger } from './logger/sneaker-logger';
-import { Roles } from './roles/model/roles.interface';
+import { RolesDocument } from './roles/model/roles.interface';
 import { RolesService } from './roles/roles.service';
-import { Users } from './users/model/users.interface';
+import { UsersDocument } from './users/model/users.interface';
 import { UsersService } from './users/users.service';
-
+/**
+ *
+ *
+ * @export
+ * @class AppService
+ * @implements {OnModuleInit}
+ *
+ * @author smpham
+ */
 @Injectable()
 export class AppService implements OnModuleInit {
   private readonly REDLOCK_RESOURCE_KEY = 'ms-sneaker-apis-lock-key';
@@ -35,7 +43,7 @@ export class AppService implements OnModuleInit {
   }
   async initData() {
     this.sneakerLogger.log('Start init root data');
-    let rootUser: Users = await this.usersService.getRootUser();
+    let rootUser: UsersDocument = await this.usersService.getRootUser();
     if (rootUser) {
       this.sneakerLogger.log('Root data have initialized');
       return;
@@ -60,7 +68,9 @@ export class AppService implements OnModuleInit {
     this.sneakerLogger.log('Init root roles');
     const roles = [];
     for (let i = 0; i < rootRoles.length; i++) {
-      const role = await this.rolesService.create(rootRoles[i] as Roles);
+      const role = await this.rolesService.create(
+        rootRoles[i] as RolesDocument,
+      );
       roles.push(role);
     }
     rootUser.roleId = roles.filter((r) => r.type === 'ADMIN')[0].id;

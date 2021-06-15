@@ -1,62 +1,52 @@
-import { Schema } from 'mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
-const ProductsSchema = new Schema(
-  {
-    main_product_id: {
-      type: String,
-      required: true,
-      trim: true,
-      unique: true,
-    },
-    title: {
-      type: String,
-      required: true,
-      trim: true,
-      minlength: 3,
-    },
-    subTitle: {
-      type: String,
-      trim: true,
-    },
-    category: {
-      type: String,
-      required: true,
-      trim: true,
-      minlength: 3,
-    },
-    description: {
-      type: String,
-      required: true,
-      trim: true,
-      minlength: 3,
-    },
-    color_description: {
-      type: String,
-      trim: true,
-    },
-    images: {
-      type: Array,
-      required: true,
-    },
-    price: {
-      type: Object,
-      required: true,
-    },
-    sizes: {
-      type: Array,
-      required: true,
-    },
-    color_ways: {
-      type: Array,
-    },
-    onStock: {
-      type: Boolean,
-      required: true,
-    },
-    updatedAt: Date,
-  },
-  { timestamps: true },
-);
+/**
+ *
+ * @export
+ * @class Products
+ *
+ * @author smpham
+ */
+@Schema()
+export class Products {
+  @Prop({ required: true, unique: true, trim: true })
+  main_product_id: string;
+
+  @Prop({ required: true, trim: true, minlength: 3, maxlength: 255 })
+  title: string;
+
+  @Prop()
+  subTitle: string;
+
+  @Prop({ required: true, trim: true, minlength: 3, maxlength: 255 })
+  category: string;
+
+  @Prop({ required: true, trim: true, minlength: 3 })
+  description: string;
+
+  @Prop()
+  color_description: string;
+
+  @Prop({ required: true })
+  images: string[];
+
+  @Prop({ type: Object, required: true })
+  price: { currentPrice?: string; oldPrice?: string };
+
+  @Prop({ type: Object, required: true })
+  size: [{ size?: string; onStock?: boolean }];
+
+  @Prop()
+  color_ways: string[];
+
+  @Prop({ required: true })
+  onStock: boolean;
+
+  @Prop({ required: true })
+  updatedAt: Date;
+}
+
+const ProductsSchema = SchemaFactory.createForClass(Products);
 
 ProductsSchema.index({ name: 'title' }, { weights: { name: 3 } });
 ProductsSchema.index({ name: 'subTitle' }, { weights: { name: 3 } });

@@ -1,6 +1,14 @@
 import { Document, Schema } from 'mongoose';
-
-export interface Users extends Document {
+/**
+ *
+ *
+ * @export
+ * @interface UsersDocument
+ * @extends {Document}
+ *
+ * @author smpham
+ */
+export interface UsersDocument extends Document {
   id?: string | Schema.Types.ObjectId;
   email?: string;
   password?: string;
@@ -10,4 +18,5 @@ export interface Users extends Document {
   avatar?: string;
   phone?: string;
   roleId?: string | Schema.Types.ObjectId;
+  updatedAt?: Date;
 }

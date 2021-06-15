@@ -1,9 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { BcryptService } from 'src/core/services/bcrypt.service';
 import { ConfigService } from 'src/core/services/config.service';
-import { Users } from './model/users.interface';
+import { UsersDocument } from './model/users.interface';
 import { UsersRepository } from './users.repository';
-
+/**
+ *
+ *
+ * @export
+ * @class UsersService
+ *
+ * @author smpham
+ */
 @Injectable()
 export class UsersService {
   constructor(
@@ -12,19 +19,19 @@ export class UsersService {
     private readonly bcryptService: BcryptService,
   ) {}
 
-  getRootUser(): Promise<Users> {
+  getRootUser(): Promise<UsersDocument> {
     return this.usersRepository.findOne({
       conditions: { email: this.configService.getRootAccount().email },
     });
   }
 
-  initRootUser(): Promise<Users> {
+  initRootUser(): Promise<UsersDocument> {
     return new Promise(async (resolve, reject) => {
       try {
         const rootPassword = await this.bcryptService.hash(
           this.configService.getRootAccount().password,
         );
-        const newRootUser: Partial<Users> = {
+        const newRootUser: Partial<UsersDocument> = {
           ...this.configService.getRootAccount(),
           password: rootPassword,
         };
@@ -37,10 +44,14 @@ export class UsersService {
     });
   }
 
-  async updateUser(user: Users) {
+  async updateUser(user: UsersDocument) {
     return this.usersRepository.findByIdAndUpdate({
       id: user.id,
       update: user,
     });
+  }
+
+  async getUser(email: string): Promise<UsersDocument> {
+    return this.usersRepository.findOne({ conditions: { email } });
   }
 }

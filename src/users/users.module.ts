@@ -4,7 +4,14 @@ import { RolesModule } from 'src/roles/roles.module';
 import { UsersSchema } from './model/users.schema';
 import { UsersRepository } from './users.repository';
 import { UsersService } from './users.service';
-
+/**
+ *
+ *
+ * @export
+ * @class UsersModule
+ *
+ * @author smpham
+ */
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: 'Users', schema: UsersSchema }]),

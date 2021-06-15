@@ -7,7 +7,9 @@ type envKeys =
   | 'MONGO_URI'
   | 'REDIS_URI'
   | 'ROOT_USER_EMAIL'
-  | 'ROOT_USER_DEFAULT_PASSWORD';
+  | 'ROOT_USER_DEFAULT_PASSWORD'
+  | 'JWT_ACCESS_TOKEN_SECRET'
+  | 'JWT_ACCESS_TOKEN_EXPIRES_IN';
 
 type Config = { [key in envKeys]: string };
 
@@ -26,6 +28,8 @@ export class ConfigService {
       REDIS_URI: Joi.string().required(),
       ROOT_USER_EMAIL: Joi.string().email(),
       ROOT_USER_DEFAULT_PASSWORD: Joi.string().required(),
+      JWT_ACCESS_TOKEN_SECRET: Joi.string().required(),
+      JWT_ACCESS_TOKEN_EXPIRES_IN: Joi.string().required(),
     });
     const { error, value: validateConfig } = Joi.validate(envConfig, envSchema);
     if (error) {

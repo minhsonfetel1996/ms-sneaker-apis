@@ -21,7 +21,7 @@ export class HttpInterceptor implements NestInterceptor {
       tap(() => {
         const statusCode = context.switchToHttp().getResponse().statusCode;
         const delay = Date.now() - now;
-        (statusCode === 200
+        (statusCode === 200 || statusCode === 201
           ? this.sneakerLogger.success
           : this.sneakerLogger.error)(
           `${statusCode} | [${method}] ${url} - ${delay}ms`,

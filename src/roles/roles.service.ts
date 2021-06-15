@@ -1,13 +1,19 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { Roles } from './model/roles.interface';
+import { RolesDocument } from './model/roles.interface';
 import { RolesRepository } from './roles.repository';
-
+/**
+ *
+ * @export
+ * @class RolesService
+ *
+ * @author smpham
+ */
 @Injectable()
 export class RolesService {
   constructor(private readonly rolesRepository: RolesRepository) {}
 
-  async create(role: Roles): Promise<Roles> {
-    const data: Partial<Roles> = {
+  async create(role: RolesDocument): Promise<RolesDocument> {
+    const data: Partial<RolesDocument> = {
       ...role,
     };
 
@@ -22,13 +28,13 @@ export class RolesService {
     return this.rolesRepository.createOne(data);
   }
 
-  findAll(): Promise<Roles[]> {
+  findAll(): Promise<RolesDocument[]> {
     return this.rolesRepository.findAll({
       conditions: { type: { $ne: 'ADMIN' } },
     });
   }
 
-  findByType(type: string): Promise<Roles> {
+  findByType(type: string): Promise<RolesDocument> {
     return this.rolesRepository.findOne({
       conditions: { type: type },
     });

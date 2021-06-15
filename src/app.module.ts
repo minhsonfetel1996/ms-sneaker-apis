@@ -1,21 +1,22 @@
 import { Module } from '@nestjs/common';
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ConfigService } from './core/services/config.service';
-import { UsersModule } from './users/users.module';
-import { MongooseModule } from '@nestjs/mongoose';
-import { RolesModule } from './roles/roles.module';
+import { AuthModule } from './auth/auth.module';
 import { CoreModule } from './core/core.module';
-import { LoggerModule } from './logger/logger.module';
-import { ProductsModule } from './products/products.module';
-import { APP_INTERCEPTOR } from '@nestjs/core';
 import { HttpInterceptor } from './core/interceptors/http.interceptor';
 import { TimeoutInterceptor } from './core/interceptors/timeout.interceptor';
+import { ConfigService } from './core/services/config.service';
+import { ProductsModule } from './products/products.module';
+import { RolesModule } from './roles/roles.module';
+import { SharedModule } from './shared/shared.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
     CoreModule,
-    LoggerModule,
+    SharedModule,
     MongooseModule.forRootAsync({
       imports: [CoreModule],
       useFactory: (config: ConfigService) => ({
@@ -29,6 +30,7 @@ import { TimeoutInterceptor } from './core/interceptors/timeout.interceptor';
     UsersModule,
     RolesModule,
     ProductsModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [

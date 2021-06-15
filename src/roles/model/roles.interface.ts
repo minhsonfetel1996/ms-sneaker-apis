@@ -1,6 +1,13 @@
 import { Schema, Document } from 'mongoose';
-
-export interface Roles extends Document {
+/**
+ *
+ * @export
+ * @interface RolesDocument
+ * @extends {Document}
+ *
+ * @author smpham
+ */
+export interface RolesDocument extends Document {
   readonly id?: string | Schema.Types.ObjectId;
   readonly name?: string;
   readonly description?: string;
