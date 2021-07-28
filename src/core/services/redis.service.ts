@@ -5,6 +5,7 @@ import { promisify } from 'util';
 import { RedisMutexLock } from '../mutex-locks/redis-mutex-lock';
 import { IMutexLock } from '../interfaces/mutex-lock.interface';
 import { ConfigService } from './config.service';
+import { SneakerLogger } from '../../logger/sneaker-logger';
 
 @Injectable()
 export class RedisService implements OnModuleInit {
@@ -15,7 +16,10 @@ export class RedisService implements OnModuleInit {
   get;
   del;
 
-  constructor(private readonly configService: ConfigService) {}
+  constructor(
+    private readonly configService: ConfigService,
+    private readonly sneakerLogger: SneakerLogger,
+  ) {}
 
   async onModuleInit() {
     await this.connectRedisDatabase();
@@ -31,10 +35,15 @@ export class RedisService implements OnModuleInit {
     return new Promise<void>((resolve, reject) => {
       this.client = redis.createClient(this.configService.get('REDIS_URI'));
       this.client.once('error', (error) => {
+        this.sneakerLogger.error(
+          'Have an error during connect redis database: ',
+          error,
+        );
         reject(error);
       });
 
       this.client.once('connect', () => {
+        this.sneakerLogger.log('Connected Redis database');
         this.set = promisify(this.client.set).bind(this.client);
         this.get = promisify(this.client.get).bind(this.client);
         this.del = promisify(this.client.del).bind(this.client);

@@ -1,5 +1,4 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
-import { ConfigService } from './core/services/config.service';
 import { RedisService } from './core/services/redis.service';
 import { SneakerLogger } from './logger/sneaker-logger';
 import { RolesDocument } from './roles/model/roles.interface';

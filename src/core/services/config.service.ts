@@ -50,6 +50,7 @@ export class ConfigService {
       lastName: 'Sneaker',
       address: 'Sneaker shop',
       phone: '123456789',
+      updatedAt: new Date(),
     };
   }
 }
